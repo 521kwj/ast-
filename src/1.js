@@ -5,17 +5,17 @@ let sourceCode = `function ast(a,b){return a+ b}`;
 let ast = esprima.parseScript(sourceCode)
 //修改函数名字或者变量名字其实就是在修改抽象语法树
 estraverse.traverse(ast,{
-  enter(path){
+  enter(node){
     
-    console.log('enter',path.type)
-    if(path.type == 'Identifier' && path.name == 'ast') path.name = 'runCode';
+    console.log('enter',node.type)
+    if(node.type == 'Identifier' && node.name == 'ast') node.name = 'runCode';
 
-    if(path.type == 'Identifier' && path.name == 'a') path.name = 'aa';
-    if(path.type == 'Identifier' && path.name == 'b') path.name = 'bb';
+    if(node.type == 'Identifier' && node.name == 'a') node.name = 'aa';
+    if(node.type == 'Identifier' && node.name == 'b') node.name = 'bb';
     
   }, 
-  leave(path){
-    console.log('leave',path.type)
+  leave(node){
+    console.log('leave',node.type)
   }
 })
 const r = escodegen.generate(ast)
